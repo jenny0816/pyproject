@@ -1,0 +1,52 @@
+from tkcalendar import Calendar, DateEntry
+try:
+    import tkinter as tk
+    from tkinter import ttk
+except ImportError:
+    import Tkinter as tk
+    import ttk
+
+top = tk.Tk()
+top.geometry('400x500')
+top.title('我的日曆')
+cal = Calendar(top, selectmode='none')
+date = cal.datetime.today()
+cal.calevent_create(date, 'Hello World', 'message')
+cal.calevent_create(date, 'Reminder 2', 'reminder')
+cal.calevent_create(date + cal.timedelta(days=-2), 'Reminder 1', 'reminder')
+cal.calevent_create(date + cal.timedelta(days=3), 'Message', 'message')
+
+cal.tag_config('reminder', background='red', foreground='yellow')
+
+cal.pack(fill="both", expand=True)
+
+date = cal.datetime.today()
+cal.calevent_create(date, 'Hello World', 'message')
+
+ttk.Label(top, text='╰（‵□′）╯新增事件╰（‵□′）╯').pack(padx=10, pady=10)
+ttk.Label(top, text='選擇日期：').pack(padx=10, pady=10)
+    
+cal2 = DateEntry(top, width=12, background='darkblue',
+                    foreground='white', borderwidth=2, year=2021)
+cal2.pack(padx=10, pady=10)
+
+def add():
+    date = cal2.get_date()
+    name = event_name.get()
+    content = event_content.get()
+    cal.calevent_create(date, content, name)
+
+    
+mylabel = ttk.Label(top, text='名稱：')
+mylabel.pack(padx=10, pady=10)
+event_name = ttk.Entry(top)
+event_name.pack(padx=10, pady=10)
+
+mylabel2 = ttk.Label(top, text='內容：')
+mylabel2.pack(padx=10, pady=10)
+event_content = ttk.Entry(top)
+event_content.pack(padx=10, pady=10)
+
+ttk.Button(top, text='ADD',command=add).pack(padx=10, pady=10)
+
+top.mainloop()
